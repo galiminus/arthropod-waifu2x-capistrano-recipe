@@ -1,0 +1,21 @@
+[Unit]
+Description = <%= fetch(:application) %>
+After=syslog.target network.target
+
+[Service]
+Environment = AWS_REGION=<%= ENV['AWS_REGION'] %>
+Environment = AWS_ACCESS_KEY_ID=<%= ENV['AWS_ACCESS_KEY_ID'] %>
+Environment = AWS_SECRET_ACCESS_KEY=<%= ENV['AWS_SECRET_ACCESS_KEY'] %>
+Environment = QUEUE_NAME=<%= ENV['QUEUE_NAME'] %>
+Environment = WAIFU=<%= ENV['WAIFU'] %>
+Environment = PWD=<%= current_path %>
+WorkingDirectory = <%= current_path %>
+ExecStart = /usr/local/bin/bundle exec foreman start
+ExecStop=/bin/kill -TERM $MAINPID
+User = arthropod-waifu2x
+Group = arthropod-waifu2x
+RestartSec=1
+Restart=on-failure
+
+[Install]
+WantedBy = multi-user.target
