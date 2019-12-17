@@ -6,9 +6,17 @@ After=syslog.target network.target
 Environment = AWS_REGION=<%= ENV['AWS_REGION'] %>
 Environment = AWS_ACCESS_KEY_ID=<%= ENV['AWS_ACCESS_KEY_ID'] %>
 Environment = AWS_SECRET_ACCESS_KEY=<%= ENV['AWS_SECRET_ACCESS_KEY'] %>
+Environment = AWS_BUCKET=<%= ENV['AWS_BUCKET'] %>
 Environment = QUEUE_NAME=<%= ENV['QUEUE_NAME'] %>
 Environment = WAIFU=<%= ENV['WAIFU'] %>
+Environment = WAIFU_CUDNN=<%= ENV['WAIFU_CUDNN'] %>
 Environment = PWD=<%= current_path %>
+Environment = LUA_PATH='<%= ENV['LUAROCKS_DIR'] %>/share/lua/5.1/?.lua;<%= ENV['LUAROCKS_DIR'] %>/share/lua/5.1/?/init.lua;<%= ENV['TORCH_DIR'] %>/install/share/lua/5.1/?.lua;<%= ENV['TORCH_DIR'] %>/install/share/lua/5.1/?/init.lua;./?.lua;<%= ENV['TORCH_DIR'] %>/install/share/luajit-2.1.0-beta1/?.lua;/usr/local/share/lua/5.1/?.lua;/usr/local/share/lua/5.1/?/init.lua'
+Environment = LUA_CPATH='<%= ENV['TORCH_DIR'] %>/install/lib/?.so;<%= ENV['LUAROCKS_DIR'] %>/lib/lua/5.1/?.so;<%= ENV['TORCH_DIR'] %>/install/lib/lua/5.1/?.so;./?.so;/usr/local/lib/lua/5.1/?.so;/usr/local/lib/lua/5.1/loadall.so'
+Environment = PATH=<%= ENV['TORCH_DIR'] %>/install/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+Environment = LD_LIBRARY_PATH=<%= ENV['TORCH_DIR'] %>/install/lib
+Environment = DYLD_LIBRARY_PATH=<%= ENV['TORCH_DIR'] %>/install/lib
+
 WorkingDirectory = <%= current_path %>
 ExecStart = /usr/local/bin/bundle exec foreman start
 ExecStop=/bin/kill -TERM $MAINPID
